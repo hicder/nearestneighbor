@@ -1,5 +1,9 @@
 #include <gtest/gtest.h>
-#include "../plane.h"
+#include <utility>
+
+#include "plane.h"
+
+using namespace std;
 
 namespace {
 
@@ -34,8 +38,11 @@ class PlaneTest : public ::testing::Test {
 };
 
 // Tests that the Foo::Bar() method does Abc.
-TEST_F(PlaneTest, MethodBarDoesAbc) {
-  EXPECT_EQ(0,0);
+TEST_F(PlaneTest, ToPoint) {
+  Plane plane(4, 2, 2);
+  std::pair<double, double> plane2d = plane.toPoint();
+  EXPECT_EQ(2, plane2d.first);
+  EXPECT_EQ(1, plane2d.second);
 }
 
 }  // namespace
