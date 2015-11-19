@@ -18,6 +18,6 @@ pair<double, double> Plane::toPoint() {
   return make_pair(a/2, b/2);
 }
 
-bool Plane::operator==(const Plane& other) {
+bool Plane::operator==(const Plane& other) const {
   return (a == other.a) && (b == other.b) && (c == other.c);
 }
