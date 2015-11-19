@@ -21,3 +21,19 @@ pair<double, double> Plane::toPoint() {
 bool Plane::operator==(const Plane& other) const {
   return (a == other.a) && (b == other.b) && (c == other.c);
 }
+
+bool Plane::operator< (const Plane& other) const {
+  if (a != other.a) {
+    return a < other.a;
+  }
+
+  if (b != other.b) {
+    return b < other.b;
+  }
+
+  if (c != other.c) {
+    return c < other.c;
+  }
+
+  return false;
+}
