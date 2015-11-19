@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <utility>
+#include <set>
 
 #include "plane.h"
 
@@ -45,6 +46,22 @@ TEST_F(PlaneTest, ToPoint) {
   EXPECT_EQ(1, plane2d.second);
 }
 
+TEST_F(PlaneTest, EqualsOperator) {
+  Plane plane(4, 2, 2);
+  Plane plane2(4, 2, 2);
+  EXPECT_EQ(true, plane == plane2);
+}
+
+TEST_F(PlaneTest, EqualsOperatorSet) {
+  Plane plane(4, 2, 2);
+  Plane plane2(4, 2, 2);
+  Plane plane3(5, 2, 2);
+  std::set<Plane> planeSet;
+  planeSet.insert(plane);
+  planeSet.insert(plane2);
+  planeSet.insert(plane3);
+  EXPECT_EQ(2, planeSet.size());
+}
 }  // namespace
 
 int main(int argc, char **argv) {
