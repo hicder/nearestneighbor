@@ -5,6 +5,6 @@ class Plane {
 		double a;
 		double b;
 		double c;
-		Plane::Plane(double, double, double);
+		Plane(double, double, double);
 };
 
