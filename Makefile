@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -c -g -O0 -Wall -Werror
 LINKER = g++
-TESTLDFLAGS = -L/usr/local/lib -lgtest
+TESTLDFLAGS = -L/usr/local/lib -lgtest -lpthread
 TESTCFLAGS = -I/usr/local/include
 
 nn: main.o plane.o
@@ -14,5 +14,5 @@ clean:
 	-rm -f *.o nn planetest
 
 test: plane.o
-	$(LINKER) $(TESTLDFLAGS) $(TESTCFLAGS) plane.o PlaneTest.cpp -o planetest
+	$(LINKER) $(TESTCFLAGS) plane.o PlaneTest.cpp -o planetest $(TESTLDFLAGS)
 	./planetest
