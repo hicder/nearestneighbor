@@ -12,6 +12,10 @@ class Cutting {
  public:
   Cutting(int i, int level, std::set<Plane> planes);
 
+  /* This is only used for temporary silence of error. Should be remove later.*/
+  // TODO (hicder): remove this.
+  Cutting();
+
  public:
   /* (1/2^i) cutting. */
   int i_;
@@ -20,5 +24,5 @@ class Cutting {
   int level_;
 
   /* cell \delta */
-  std::vector<Cell> cells_;
+  std::vector<std::shared_ptr<Cell>> cells_;
 };

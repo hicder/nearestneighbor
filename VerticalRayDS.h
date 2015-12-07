@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -28,6 +29,13 @@ class VerticalRayDS {
   /* return the nearest plane to the upward vertical ray. */
   std::shared_ptr<Plane> getNearestPlane(std::shared_ptr<VerticalRay> ray);
 
+  /* preprocess original data structure. */
+  void preprocess(std::shared_ptr<Subset> subset);
+
+  void cleanup();
  public:
-  std::vector<Subset> subsets_;
+  std::vector<std::shared_ptr<Subset>> subsets_;
+
+  /*(depth -> list of subset) */
+  std::map<int, std::set<std::shared_ptr<Subset>>> depthMap_;
 };

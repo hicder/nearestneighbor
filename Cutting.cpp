@@ -7,3 +7,7 @@ using namespace std;
 Cutting::Cutting(int i, int level, set<Plane> planes) {
 
 }
+
+Cutting::Cutting() {
+
+}

@@ -1,4 +1,5 @@
-#include "plane.h"
+#include "Plane.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -19,7 +20,9 @@ pair<double, double> Plane::toPoint() {
 }
 
 bool Plane::operator==(const Plane& other) const {
-  return (a == other.a) && (b == other.b) && (c == other.c);
+  return (Utils::isEqualDouble(a,other.a) &&
+          Utils::isEqualDouble(b, other.b) &&
+          Utils::isEqualDouble(c, other.c));
 }
 
 bool Plane::operator< (const Plane& other) const {
@@ -36,4 +39,14 @@ bool Plane::operator< (const Plane& other) const {
   }
 
   return false;
+}
+
+Plane& Plane::operator=(const Plane& other) {
+  if (this != &other) {
+    this->a = other.a;
+    this->b = other.b;
+    this->c = other.c;
+  }
+
+  return *this;
 }
