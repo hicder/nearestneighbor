@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Subset.h"
 
 using namespace std;
@@ -12,5 +14,13 @@ Subset::Subset(const set<shared_ptr<Plane>>& planes) {
 
 void Subset::insertPlane(shared_ptr<Plane> plane) {
   planeSet_.insert(plane);
+}
+
+void Subset::construct() {
+
+}
+
+void Subset::deletePlane(shared_ptr<Plane> plane) {
+
 }
 

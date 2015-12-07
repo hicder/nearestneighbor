@@ -6,6 +6,15 @@
 #include "Subset.h"
 #include "VerticalRay.h"
 
+/**
+ * class VerticalDS
+ *
+ * Main data structure to answer the query of vertical ray shooting.
+ * This data structure is implemnted from the paper:
+ * A Dynamic Data Structure for 3-d Convex Hulls and
+ *  2-d Nearest Neighbor Queries
+ * by Timothy Chan.
+ */
 class VerticalRayDS {
  public:
   VerticalRayDS();
@@ -19,5 +28,6 @@ class VerticalRayDS {
   /* return the nearest plane to the upward vertical ray. */
   std::shared_ptr<Plane> getNearestPlane(std::shared_ptr<VerticalRay> ray);
 
+ public:
   std::vector<Subset> subsets_;
 };
