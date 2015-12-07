@@ -4,8 +4,8 @@ LINKER = g++
 TESTLDFLAGS = -L/usr/local/lib -lgtest -lpthread
 TESTCFLAGS = -I/usr/local/include
 
-nn: main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o
-	$(LINKER) main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o -o nn
+nn: main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o Utils.o
+	$(LINKER) main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o Utils.o -o nn
 main.o:
 	$(CC) $(CFLAGS) main.cpp
 Plane.o:
@@ -22,6 +22,8 @@ Cutting.o:
 	$(CC) $(CFLAGS) Cutting.cpp
 Point.o:
 	$(CC) $(CFLAGS) Point.cpp
+Utils.o:
+	$(CC) $(CFLAGS) Utils.cpp
 clean:
 	-rm -f *.o nn planetest
 
