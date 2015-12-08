@@ -9,6 +9,7 @@ class Utils {
   static constexpr double EPSILON = 0.0000000001;
   static bool isPointInPlane(const Point& p, const Plane& plane);
   static bool isEqualDouble(double x, double y);
+  static bool isPointAbovePlane(const Point& point, const Plane& plane);
 }; // Utils
 
 struct PlaneComparator {

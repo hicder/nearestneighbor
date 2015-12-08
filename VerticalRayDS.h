@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "Plane.h"
 #include "Subset.h"
 #include "VerticalRay.h"
 

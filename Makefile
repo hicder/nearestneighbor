@@ -1,7 +1,7 @@
 CC = g++
-CFLAGS = -c -g -O0 -Wall -Werror -std=c++11
-LINKER = g++
-TESTLDFLAGS = -L/usr/local/lib -lgtest -lpthread
+CFLAGS = -c -g -O0 -std=c++11 -I/usr/local/include -Wno-deprecated-register
+LINKER = g++ -L/usr/local/lib -lcgal -lgmp -lmpfr
+TESTLDFLAGS = -L/usr/local/lib -lgtest -lpthread -lcgal -lgmp -lmpfr
 TESTCFLAGS = -I/usr/local/include -std=c++11
 
 nn: main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o Utils.o Cell.o

@@ -10,7 +10,7 @@
 
 class Cutting {
  public:
-  Cutting(int i, int level, std::set<Plane> planes);
+  Cutting(int i, int level, const PlaneSet& planes);
 
   /* This is only used for temporary silence of error. Should be remove later.*/
   // TODO (hicder): remove this.
