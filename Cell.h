@@ -21,5 +21,5 @@ class Cell {
   /* j_delta*/
   int j_;
 
-  std::set<std::shared_ptr<Plane>> conflictList_;
+  PlaneSet conflictList_;
 };

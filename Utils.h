@@ -13,7 +13,7 @@ class Utils {
 
 struct PlaneComparator {
   bool operator() (const std::shared_ptr<Plane>& lhs,
-                   const std::shared_ptr<Plane>& rhs) {
+                   const std::shared_ptr<Plane>& rhs) const {
     return *lhs < *rhs;
   }
 };
