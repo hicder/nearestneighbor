@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#define C 1
+#define C_DOUBLE_PRIME 5
+
 Subset::Subset() { }
 
 Subset::Subset(const PlaneSet& planes) {
@@ -44,30 +47,30 @@ void Subset::construct() {
   staticSet_ = setList_[setListSize - 1];
 }
 
-void Subset::deletePlane(shared_ptr<Plane> plane) {
-  if (planeSet_.erase(plane) == 1) {
-    liveSet_.erase(plane);
+PlaneSet Subset::deletePlane(shared_ptr<Plane> plane) {
+  PlaneSet deletedPlanes; 
+  planeSet_.erase(plane);
+  liveSet_.erase(plane);
+  for (int i = 0; i < planeSet_.size(); i++) {
+    for (auto cell : cuttingList_[i]->cells_) {
+      if (cell->isInConflictList(plane)) {
+        cell->j_++;
 
-    for (int i = 0; i < planeSet_.size(); i++) {
-      for (auto cell : cuttingList_[i]->cells_) {
-        if (cell->isInConflictList(plane)) {
-          cell->j_++;
-
-          // TODO (hicder): Fix this.
-          int threshold = 0;
-          if (cell->j_ == threshold) {
-            for (auto it = liveSet_.begin(); it != liveSet_.end();) {
-              if (cell->isInConflictList(*it)) {
-                it = liveSet_.erase(it);
-              } else {
-                it++;
-              }
+        int threshold = ceil(cell->getConflictListSize() / C_DOUBLE_PRIME);
+        if (cell->j_ == threshold) {
+          for (auto it = liveSet_.begin(); it != liveSet_.end();) {
+            if (cell->isInConflictList(*it)) {
+              it = liveSet_.erase(it);
+              deletedPlanes.insert(*it);
+            } else {
+              it++;
             }
           }
         }
       }
     }
   }
+  return deletedPlanes;
 }
 
 shared_ptr<Subset> Subset::getDiff() {

@@ -19,7 +19,7 @@ class Subset {
 
   void insertPlane(std::shared_ptr<Plane> plane);
   void construct();
-  void deletePlane(std::shared_ptr<Plane>);
+  PlaneSet deletePlane(std::shared_ptr<Plane>);
 
   std::shared_ptr<Subset> getDiff();
   bool isEmpty() const {
