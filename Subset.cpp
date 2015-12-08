@@ -7,7 +7,7 @@ using namespace std;
 
 Subset::Subset() { }
 
-Subset::Subset(const set<shared_ptr<Plane>>& planes) {
+Subset::Subset(const PlaneSet& planes) {
   for (auto plane : planes) {
     insertPlane(plane);
   }

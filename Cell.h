@@ -5,11 +5,12 @@
 
 #include "Plane.h"
 #include "Point.h"
+#include "Utils.h"
 class Cell {
  public:
   Cell();
 
-  void computeConflict(const std::set<std::shared_ptr<Plane>>&);
+  void computeConflict(const PlaneSet&);
 
   bool isInConflictList(const std::shared_ptr<Plane>);
 

@@ -8,7 +8,7 @@ Cell::Cell() {
 
 }
 
-void Cell::computeConflict(const set<shared_ptr<Plane>>& planes) {
+void Cell::computeConflict(const PlaneSet& planes) {
 
 }
 

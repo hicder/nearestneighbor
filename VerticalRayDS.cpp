@@ -38,9 +38,24 @@ void VerticalRayDS::preprocess(shared_ptr<Subset> subset) {
 
 void VerticalRayDS::cleanup() {
   // TODO (hicder): FIX this.
-  for (auto&& it : depthMap_) {
-    if (it.second.size() == b) {
-
+  for (auto it = depthMap_.begin(); it != depthMap_.end();) {
+    if (it->second.size() == b) {
+      // We will clean up from the beginning, and return.
+      // I don't think the recursion level would be too deep.
+      // It should be bounded by logn, which is at most 32.
+      PlaneSet combinedLive;
+      for (auto&& s : it->second) {
+        combinedLive.insert(s->liveSet_.begin(), s->liveSet_.end());
+        subsets_.erase(remove(subsets_.begin(), subsets_.end(), s),
+                       subsets_.end());
+      }
+      it = depthMap_.erase(it);
+      shared_ptr<Subset> combinedSubset = make_shared<Subset>(combinedLive);
+      preprocess(combinedSubset);
+      cleanup();
+      return;
+    } else {
+      it++;
     }
   }
 }

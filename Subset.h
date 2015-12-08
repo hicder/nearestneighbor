@@ -6,6 +6,7 @@
 
 #include "Plane.h"
 #include "Cutting.h"
+#include "Utils.h"
 /**
  * Represent a subset of plane
  */
@@ -13,7 +14,7 @@
 class Subset {
  public:
   Subset();
-  explicit Subset(const std::set<std::shared_ptr<Plane>>& planes);
+  explicit Subset(const PlaneSet& planes);
   explicit Subset(std::shared_ptr<Plane> plane);
 
   void insertPlane(std::shared_ptr<Plane> plane);
@@ -30,16 +31,16 @@ class Subset {
   }
  public:
   /* S */
-  std::set<std::shared_ptr<Plane>> planeSet_;
+  PlaneSet planeSet_;
 
   /* List of S_i */
-  std::vector<std::set<std::shared_ptr<Plane>>> setList_;
+  std::vector<PlaneSet> setList_;
 
   /* S_live */
-  std::set<std::shared_ptr<Plane>> liveSet_;
+  PlaneSet liveSet_;
 
   /* S_static */
-  std::set<std::shared_ptr<Plane>> staticSet_;
+  PlaneSet staticSet_;
 
   /* T_i */
   std::vector<std::shared_ptr<Cutting>> cuttingList_;
