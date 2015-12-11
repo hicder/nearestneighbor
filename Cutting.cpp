@@ -37,6 +37,7 @@ struct Plane_from_facet {
   }
 };
 
+// Helper functions
 Point_2 Plane_3ToPoint(const Plane_3& plane, double& outZ) {
   outZ = -(plane.d()/plane.c());
   return Point_2(-(plane.a()/plane.c()),
@@ -46,7 +47,7 @@ Point_2 Plane_3ToPoint(const Plane_3& plane, double& outZ) {
 Cutting::Cutting(int i, int level, const PlaneSet& planes) {
   i_ = i;
   level_ = level;
-  
+
   vector<shared_ptr<Plane>> v(planes.begin(), planes.end());
   int size = ceil(((double)planes.size())/pow(2,i));
   random_shuffle(v.begin(), v.end());
@@ -63,7 +64,10 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
   CGAL::convex_hull_3(pointSet.begin(), pointSet.begin() + size, poly);
 
   // Transform facet into planes.
-  transform(poly.facets_begin(), poly.facets_end(), poly.planes_begin(), Plane_from_facet());
+  transform(poly.facets_begin(),
+            poly.facets_end(),
+            poly.planes_begin(),
+            Plane_from_facet());
 
   vector<Plane_3> planesToCheck;
   copy(poly.planes_begin(), poly.planes_end(), planesToCheck.begin());
@@ -102,6 +106,7 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
       points.push_back(p);
     }
     cell->insertPoints(points);
+    cell->computeConflict(planes);
     cells_.push_back(cell);
   }
 }
