@@ -9,7 +9,13 @@ Cell::Cell() {
 }
 
 void Cell::computeConflict(const PlaneSet& planes) {
-
+	for(const auto&& plane:planes)	{
+		if (Utils::isPointAbovePlane(*vertices_[0], *plane) ||
+			Utils::isPointAbovePlane(*vertices_[1], *plane) ||
+			Utils::isPointAbovePlane(*vertices_[2], *plane)) {
+			conflictList_.insert(plane);
+		}
+	}
 }
 
 bool Cell::isInConflictList(const shared_ptr<Plane> plane) {
