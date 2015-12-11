@@ -20,6 +20,8 @@ class Plane {
     /* convert the plane into the corresponding point in 2d space */
     std::pair<double, double> toPoint();
 
+    double calculateZ(double x, double y);
+
     Plane& operator=(const Plane& other);
 };
 

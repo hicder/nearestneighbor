@@ -28,7 +28,7 @@ class VerticalRayDS {
   void deletePlane(std::shared_ptr<Plane> plane);
 
   /* return the nearest plane to the upward vertical ray. */
-  std::shared_ptr<Plane> getNearestPlane(std::shared_ptr<VerticalRay> ray);
+  std::shared_ptr<Plane> getNearestPlane(double x, double y);
 
   /* preprocess original data structure. */
   void preprocess(std::shared_ptr<Subset> subset);

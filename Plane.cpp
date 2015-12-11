@@ -20,6 +20,10 @@ pair<double, double> Plane::toPoint() {
   return make_pair(a_/2, b_/2);
 }
 
+double Plane::calculateZ(double x, double y) {
+  return a_ * x + b_ * y - c_;
+}
+
 bool Plane::operator==(const Plane& other) const {
   return (Utils::isEqualDouble(a_, other.a_) &&
           Utils::isEqualDouble(b_, other.b_) &&
