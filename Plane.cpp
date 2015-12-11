@@ -13,6 +13,7 @@ Plane::Plane(double a, double b, double c) {
   this->a_ = a;
   this->b_ = b;
   this->c_ = c;
+  this->d_ = 0;
 }
 
 pair<double, double> Plane::toPoint() {
@@ -22,7 +23,8 @@ pair<double, double> Plane::toPoint() {
 bool Plane::operator==(const Plane& other) const {
   return (Utils::isEqualDouble(a_, other.a_) &&
           Utils::isEqualDouble(b_, other.b_) &&
-          Utils::isEqualDouble(c_, other.c_));
+          Utils::isEqualDouble(c_, other.c_) &&
+          Utils::isEqualDouble(d_, other.d_));
 }
 
 bool Plane::operator< (const Plane& other) const {
@@ -38,6 +40,10 @@ bool Plane::operator< (const Plane& other) const {
     return c_ < other.c_;
   }
 
+  if (d_ != other.d_) {
+    return d_ < other.d_;
+  }
+
   return false;
 }
 
@@ -46,6 +52,7 @@ Plane& Plane::operator=(const Plane& other) {
     this->a_ = other.a_;
     this->b_ = other.b_;
     this->c_ = other.c_;
+    this->d_ = other.d_;
   }
 
   return *this;

@@ -19,3 +19,9 @@ bool Cell::isInConflictList(const shared_ptr<Plane> plane) {
 int Cell::getConflictListSize() const {
   return conflictList_.size();
 }
+
+void Cell::insertPoints(const vector<shared_ptr<Point>>& points) {
+  for (auto point : points) {
+    
+  }
+}

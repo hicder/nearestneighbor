@@ -1,11 +1,14 @@
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include <set>
 #include <vector>
 
 #include "Cell.h"
 #include "Plane.h"
+
+
 //TODO (david): COMPLETE THIS
 
 class Cutting {

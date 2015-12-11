@@ -15,6 +15,9 @@ class Cell {
   bool isInConflictList(const std::shared_ptr<Plane>);
 
   int getConflictListSize() const;
+
+  void insertPoints(const std::vector<std::shared_ptr<Point>>& points);
+
  public:
   std::vector<std::shared_ptr<Point>> vertices_;
 
