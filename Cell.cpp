@@ -22,6 +22,6 @@ int Cell::getConflictListSize() const {
 
 void Cell::insertPoints(const vector<shared_ptr<Point>>& points) {
   for (auto point : points) {
-    
+    vertices_.push_back(point);
   }
 }
