@@ -17,8 +17,20 @@ void VerticalRayDS::insertPlane(shared_ptr<Plane> plane) {
   cleanup();
 }
 
-void VerticalRayDS::deletePlane(shared_ptr<Plane> plane) {
+void VerticalRayDS::deletePlane(shared_ptr<Plane> h) {
   // TODO (hicder): FIX this.
+  PlaneSet A;
+  for(auto&& it:subsets_) {
+    if(it->planeSet_.count(h) >= 1) {
+      PlaneSet deletedPlanes = it->deletePlane(h);
+      A.insert(deletedPlanes.begin(), deletedPlanes.end());
+    }
+  }
+  if(A.count(h) >= 1)
+    A.erase(h);
+  for(auto&& it:A)  {
+    insertPlane(*it);
+  }
 }
 
 shared_ptr<Plane> VerticalRayDS::getNearestPlane(shared_ptr<VerticalRay> ray) {
