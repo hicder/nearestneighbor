@@ -1,7 +1,5 @@
 #include "Cell.h"
 
-//TODO (david): COMPLETE THIS
-
 using namespace std;
 
 Cell::Cell() {

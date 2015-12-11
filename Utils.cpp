@@ -20,12 +20,12 @@ bool Utils::isPointAbovePlane(const Point& point, const Plane& plane) {
 shared_ptr<Plane> Utils::getLowestPlaneInSet(PlaneSet ps, double x, double y)	{
   double minZ = INT_MIN;
   shared_ptr<Plane> lowestPlane;
- 	for(auto&& it:ps)	{
- 		double currZ = it->calculateZ(x, y);
- 		if (currZ < minZ)  {
+  for(auto&& it:ps)	{
+    double currZ = it->calculateZ(x, y);
+    if (currZ < minZ)  {
       lowestPlane = it;
- 			minZ = currZ;
- 		}
- 	}
+      minZ = currZ;
+    }
+  }
   return lowestPlane;
- }
+}

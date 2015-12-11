@@ -8,16 +8,14 @@
 #include "Cell.h"
 #include "Plane.h"
 
-
-//TODO (david): COMPLETE THIS
-
 class Cutting {
  public:
   Cutting(int i, int level, const PlaneSet& planes);
 
   /* This is only used for temporary silence of error. Should be remove later.*/
-  // TODO (hicder): remove this.
   Cutting();
+
+  int numOfConflictCell(std::shared_ptr<Plane> plane) const;
 
  public:
   /* (1/2^i) cutting. */

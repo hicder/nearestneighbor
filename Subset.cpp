@@ -5,9 +5,6 @@
 
 using namespace std;
 
-#define C 1
-#define C_DOUBLE_PRIME 5
-
 Subset::Subset() { }
 
 Subset::Subset(const PlaneSet& planes) {
@@ -31,10 +28,11 @@ void Subset::construct() {
   cuttingList_.resize(setListSize);
 
   // Build S_i
+  // This must come after all planes are inserted into planeSet_
+  setList_[0] = planeSet_;
   for (int i = 1; i < setListSize; i++) {
-    // TODO (hicder): fix this once David implement his code.
-    cuttingList_[i] = make_shared<Cutting>();
-    setList_[i].clear();
+    cuttingList_[i] = make_shared<Cutting>(i, C * pow(2, i), setList_[i-1]);
+    setList_[i] = getAllLightIntersectingPlanes(i, *cuttingList_[i], 4 * C * setListSize - 1);
 
     for (auto cell : cuttingList_[i]->cells_) {
       cell->computeConflict(setList_[i]);
@@ -48,7 +46,7 @@ void Subset::construct() {
 }
 
 PlaneSet Subset::deletePlane(shared_ptr<Plane> plane) {
-  PlaneSet deletedPlanes; 
+  PlaneSet deletedPlanes;
   planeSet_.erase(plane);
   liveSet_.erase(plane);
   for (int i = 0; i < planeSet_.size(); i++) {
@@ -76,4 +74,16 @@ PlaneSet Subset::deletePlane(shared_ptr<Plane> plane) {
 shared_ptr<Subset> Subset::getDiff() {
   // TODO (hicder): FIX this.
   return make_shared<Subset>();
+}
+
+PlaneSet Subset::getAllLightIntersectingPlanes(int i,
+                                               const Cutting& cutting,
+                                               int threshold) {
+  PlaneSet result;
+  for (auto plane : setList_[i - 1]) {
+    if (cutting.numOfConflictCell(plane) <= threshold) {
+      result.insert(plane);
+    }
+  }
+  return result;
 }

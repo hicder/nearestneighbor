@@ -54,7 +54,6 @@ void VerticalRayDS::preprocess(shared_ptr<Subset> subset) {
 }
 
 void VerticalRayDS::cleanup() {
-  // TODO (hicder): FIX this.
   for (auto it = depthMap_.begin(); it != depthMap_.end();) {
     if (it->second.size() == b) {
       // We will clean up from the beginning, and return.

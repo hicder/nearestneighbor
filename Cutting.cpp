@@ -114,3 +114,14 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
 Cutting::Cutting() {
 
 }
+
+int Cutting::numOfConflictCell(shared_ptr<Plane> plane) const {
+  int result = 0;
+  for (auto cell : cells_) {
+    if (cell->isInConflictList(plane)) {
+      result++;
+    }
+  }
+
+  return result;
+}

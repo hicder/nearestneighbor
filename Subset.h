@@ -29,6 +29,11 @@ class Subset {
   int depth() const {
     return std::floor(std::log2(liveSet_.size()));
   }
+
+  PlaneSet getAllLightIntersectingPlanes(int i,
+                                         const Cutting& cutting,
+                                         int threshold);
+
  public:
   /* S */
   PlaneSet planeSet_;
