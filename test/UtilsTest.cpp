@@ -43,6 +43,13 @@ TEST_F(UtilsTest, checkEquals) {
   EXPECT_EQ(true, Utils::isEqualDouble(0.3, 0.1 + 0.2));
 }
 
+TEST_F(UtilsTest, checkLowestPlane) {
+  PlaneSet planes;
+  planes.insert(make_shared<Plane>(1, 2, 3));
+  planes.insert(make_shared<Plane>(1, 2, 5));
+  shared_ptr<Plane> lowest = Utils::getLowestPlaneInSet(planes, 100, 200);
+  EXPECT_EQ(5, lowest->c_);
+}
 }  // namespace
 
 int main(int argc, char **argv) {

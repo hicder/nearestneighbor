@@ -35,8 +35,6 @@ $(TARGET): $(OBJ)
 ## Generic compilation rule
 %.o : %.cpp
 	@mkdir -p $(dir $@)
-	@echo "============="
-	@echo "Compiling $<"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ## Rules for object files from cpp files
@@ -44,27 +42,19 @@ $(TARGET): $(OBJ)
 ## one level up from the actual source directory.
 ./obj/%.o : %.cpp
 	@mkdir -p $(dir $@)
-	@echo "============="
-	@echo "Compiling $<"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TESTDIR)/obj/%.o : $(TESTDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@echo "============="
-	@echo "Compiling $<"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ## Make dependancy rules
 ./.dep/%.d: %.cpp
 	@mkdir -p $(dir $@)
-	@echo "============="
-	@echo Building dependencies file for $*.o
 	$(SHELL) -ec '$(CC) -M $(CFLAGS) $< | sed "s^$*.o^../obj/$*.o^" > $@'
 
 $(TESTDIR)/.dep/%.d: $(TESTDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@echo "============="
-	@echo Building dependencies file for $*.o
 	$(SHELL) -ec '$(CC) -M $(CFLAGS) $< | sed "s^$*.o^../obj/$*.o^" > $@'
 
 .PHONY: clean test
