@@ -73,9 +73,9 @@ test: $(TESTTARGET)
 	@true
 	$(SHELL) -ec 'test/PlaneTest && test/UtilsTest'
 
-test/PlaneTest: test/obj/PlaneTest.o Plane.o Utils.o
+test/PlaneTest: test/obj/PlaneTest.o obj/Plane.o obj/Utils.o
 	$(CC) $(TESTLDFLAGS) -o $@ $^ $(LIBS)
-test/UtilsTest: test/obj/UtilsTest.o Plane.o Utils.o
+test/UtilsTest: test/obj/UtilsTest.o obj/Plane.o obj/Utils.o
 	$(CC) $(TESTLDFLAGS) -o $@ $^ $(LIBS)
 
 ifneq ($(MAKECMDGOALS),clean)
