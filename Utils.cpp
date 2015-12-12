@@ -1,5 +1,8 @@
-#include <cmath>
+#include <chrono>
 #include <climits>
+#include <cmath>
+#include <random>
+
 #include "Utils.h"
 
 using namespace std;
@@ -45,4 +48,10 @@ shared_ptr<Plane> Utils::getLowestPlaneAboveRay(const PlaneSet& planes,
   }
 
   return lowestPlane;
+}
+
+unsigned int Utils::getRandomNumber() {
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  std::minstd_rand0 generator (seed);
+  return generator();
 }

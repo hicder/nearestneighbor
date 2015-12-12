@@ -1,7 +1,8 @@
-*.o
-nn
-Planetest
-UtilsTest
 *.d
 *.dSYM
-
+*.o
+CuttingTest
+PlaneTest
+UtilsTest
+a.out
+nn

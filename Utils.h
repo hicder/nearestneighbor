@@ -41,5 +41,8 @@ class Utils {
   /* Get lowest plane above a vertical ray.*/
   static std::shared_ptr<Plane> getLowestPlaneAboveRay(const PlaneSet& ps,
                                                        const VerticalRay& ray);
+
+  /* Get an integer random number. */
+  static unsigned int getRandomNumber();
 }; // Utils
 

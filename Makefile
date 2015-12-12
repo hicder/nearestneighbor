@@ -5,14 +5,18 @@ TESTLDFLAGS = -L/usr/local/lib
 TESTCFLAGS = -I/usr/local/include -std=c++11
 
 TESTDIR= ./test
-TESTSRC= $(addprefix $(TESTDIR)/,PlaneTest.cpp UtilsTest.cpp)
-TESTOBJ=$(join $(addsuffix obj/, $(dir $(TESTSRC))), $(notdir $(TESTSRC:.cpp=.o))) 
+TESTSRC= $(addprefix $(TESTDIR)/,PlaneTest.cpp UtilsTest.cpp CuttingTest.cpp)
+TESTOBJ=$(join $(addsuffix obj/, $(dir $(TESTSRC))), $(notdir $(TESTSRC:.cpp=.o)))
 TESTTARGET=$(addprefix test/, $(notdir $(TESTSRC:.cpp=)))
 TESTDEPENDS=$(join $(addsuffix .dep/, $(dir $(TESTSRC))), $(notdir $(TESTSRC:.cpp=.d)))
 
-SOURCE= main.cpp Plane.cpp Line.cpp Subset.cpp VerticalRayDS.cpp VerticalRay.cpp Cutting.cpp Point.cpp Utils.cpp Cell.cpp
-OBJ=$(join $(addsuffix obj/, $(dir $(SOURCE))), $(notdir $(SOURCE:.cpp=.o))) 
+MAINSOURCE= main.cpp
+MAINOBJ=$(join $(addsuffix obj/, $(dir $(MAINSOURCE))), $(notdir $(MAINSOURCE:.cpp=.o)))
+
+SOURCE= Plane.cpp Line.cpp Subset.cpp VerticalRayDS.cpp VerticalRay.cpp Cutting.cpp Point.cpp Utils.cpp Cell.cpp
+OBJ=$(join $(addsuffix obj/, $(dir $(SOURCE))), $(notdir $(SOURCE:.cpp=.o)))
 DEPENDS=$(join $(addsuffix .dep/, $(dir $(SOURCE))), $(notdir $(SOURCE:.cpp=.d)))
+
 TARGET=nn
 LIBS=-lgtest -lpthread -lcgal -lgmp -lmpfr
 
@@ -22,15 +26,14 @@ all: $(TARGET)
 
 ## Clean Rule
 clean:
-	@-rm -f $(TARGET) $(OBJ) $(DEPENDS) $(TESTTARGET) $(TESTOBJ) $(TESTDEPENDS)
+	@-rm -f $(TARGET) $(OBJ) $(DEPENDS) $(TESTTARGET) $(TESTOBJ) $(TESTDEPENDS) $(MAINOBJ)
 
 ## Rule for making the actual target
-$(TARGET): $(OBJ)
+$(TARGET): $(MAINOBJ) $(OBJ)
 	@echo "============="
 	@echo "Linking the target $@"
 	@echo "============="
 	$(LINKER) -o $@ $^ $(LIBS)
-
 
 ## Generic compilation rule
 %.o : %.cpp
@@ -57,16 +60,13 @@ $(TESTDIR)/.dep/%.d: $(TESTDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(SHELL) -ec '$(CC) -M $(CFLAGS) $< | sed "s^$*.o^../obj/$*.o^" > $@'
 
-.PHONY: clean test
-
 test: $(TESTTARGET)
-	@true
-	$(SHELL) -ec 'test/PlaneTest && test/UtilsTest'
+	$(foreach targ, $(TESTTARGET), $(SHELL) -ec $(targ);)
 
-test/PlaneTest: test/obj/PlaneTest.o obj/Plane.o obj/Utils.o
+$(TESTDIR)/%:test/obj/%.o $(OBJ)
 	$(CC) $(TESTLDFLAGS) -o $@ $^ $(LIBS)
-test/UtilsTest: test/obj/UtilsTest.o obj/Plane.o obj/Utils.o
-	$(CC) $(TESTLDFLAGS) -o $@ $^ $(LIBS)
+
+.PHONY: clean test
 
 ifneq ($(MAKECMDGOALS),clean)
 -include $(DEPENDS)
