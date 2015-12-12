@@ -2,3 +2,6 @@
 nn
 Planetest
 UtilsTest
+*.d
+*.dSYM
+

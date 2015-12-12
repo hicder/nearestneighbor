@@ -27,6 +27,5 @@ shared_ptr<Plane> Utils::getLowestPlaneInSet(PlaneSet ps, double x, double y) {
       minZ = currZ;
     }
   }
-
   return lowestPlane;
 }
