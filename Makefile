@@ -1,27 +1,54 @@
 CC = g++
-CFLAGS = -c -g -O0 -std=c++11 -I/usr/local/include -Wno-deprecated-register -MMD -MP
-LINKER = g++ -L/usr/local/lib -lcgal -lgmp -lmpfr
+CFLAGS = -g -O0 -std=c++11 -I/usr/local/include -Wno-deprecated-register -MP
+LINKER = g++ -L/usr/local/lib
 TESTLDFLAGS = -L/usr/local/lib -lgtest -lpthread -lcgal -lgmp -lmpfr
 TESTCFLAGS = -I/usr/local/include -std=c++11
 
-OBJ= main.o Plane.o Line.o Subset.o VerticalRayDS.o VerticalRay.o Cutting.o Point.o Utils.o Cell.o
-nn: $(OBJ)
-	$(LINKER) $(OBJ) -o nn
+SOURCE= main.cpp Plane.cpp Line.cpp Subset.cpp VerticalRayDS.cpp VerticalRay.cpp Cutting.cpp Point.cpp Utils.cpp Cell.cpp
+OBJ=$(join $(addsuffix ./obj/, $(dir $(SOURCE))), $(notdir $(SOURCE:.cpp=.o))) 
+DEPENDS=$(join $(addsuffix ./.dep/, $(dir $(SOURCE))), $(notdir $(SOURCE:.cpp=.d)))
+TARGET=nn
+LIBS=-lgtest -lpthread -lcgal -lgmp -lmpfr
 
--include $(OBJ:.o=.d)
+## Default rule executed
+all: $(TARGET)
+	@true
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) $< -o $@
-
+## Clean Rule
 clean:
-	rm -rf *.o nn planetest UtilsTest
+	@-rm -f $(TARGET) $(OBJ) $(DEPENDS)
 
-all: nn
+## Rule for making the actual target
+$(TARGET): $(OBJ)
+	@echo "============="
+	@echo "Linking the target $@"
+	@echo "============="
+	@$(LINKER) -o $@ $^ $(LIBS)
 
-.PHONY: clean all
+## Generic compilation rule
+%.o : %.cpp
+	@mkdir -p $(dir $@)
+	@echo "============="
+	@echo "Compiling $<"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-test: Plane.o Utils.o
-	$(LINKER) $(TESTCFLAGS) Utils.o Plane.o PlaneTest.cpp -o planetest $(TESTLDFLAGS)
-	$(LINKER) $(TESTCFLAGS) Utils.o Plane.o UtilsTest.cpp -o UtilsTest $(TESTLDFLAGS)
-	./planetest
-	./UtilsTest
+## Rules for object files from cpp files
+## Object file for each file is put in obj directory
+## one level up from the actual source directory.
+./obj/%.o : %.cpp
+	@mkdir -p $(dir $@)
+	@echo "============="
+	@echo "Compiling $<"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+## Make dependancy rules
+./.dep/%.d: %.cpp
+	@mkdir -p $(dir $@)
+	@echo "============="
+	@echo Building dependencies file for $*.o
+	$(SHELL) -ec '$(CC) -M $(CFLAGS) $< | sed "s^$*.o^../obj/$*.o^" > $@'
+
+
+.PHONY: clean
+
+-include $(DEPENDS)
