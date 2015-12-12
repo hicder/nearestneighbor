@@ -8,6 +8,9 @@
 #include "Cell.h"
 #include "Plane.h"
 
+/**
+ * This contains the cutting and all the vertical decompositions (cells).
+ */
 class Cutting {
  public:
   Cutting(int i, int level, const PlaneSet& planes);

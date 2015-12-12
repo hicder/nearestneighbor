@@ -19,9 +19,9 @@ void VerticalRayDS::insertPlane(shared_ptr<Plane> plane) {
 
 void VerticalRayDS::deletePlane(shared_ptr<Plane> h) {
   PlaneSet A;
-  for(auto&& it:subsets_) {
-    if(it->planeSet_.count(h) >= 1) {
-      PlaneSet deletedPlanes = it->deletePlane(h);
+  for(auto&& subset : subsets_) {
+    if(subset->planeSet_.count(h) >= 1) {
+      PlaneSet deletedPlanes = subset->deletePlane(h);
       A.insert(deletedPlanes.begin(), deletedPlanes.end());
     }
   }
@@ -30,19 +30,22 @@ void VerticalRayDS::deletePlane(shared_ptr<Plane> h) {
     A.erase(h);
   }
 
-  for(auto&& it : A)  {
-    insertPlane(it);
+  for(auto&& plane : A)  {
+    insertPlane(plane);
   }
 }
 
 shared_ptr<Plane> VerticalRayDS::getNearestPlane(double x, double y) {
   PlaneSet B;
-  for(auto&& it:subsets_) {
-    shared_ptr<Plane> lowPlane = Utils::getLowestPlaneInSet(it->staticSet_, x, y);
-    if(it->liveSet_.count(lowPlane)) {
+  for(auto&& subset : subsets_) {
+    shared_ptr<Plane> lowPlane =
+      Utils::getLowestPlaneInSet(subset->staticSet_, x, y);
+
+    if(subset->liveSet_.count(lowPlane)) {
       B.insert(lowPlane);
     }
   }
+
   return Utils::getLowestPlaneInSet(B, x, y);
 }
 

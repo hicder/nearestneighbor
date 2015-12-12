@@ -21,7 +21,7 @@ class Subset {
   void construct();
   PlaneSet deletePlane(std::shared_ptr<Plane>);
 
-  // Return S - S_live
+  /* Return S - S_live */
   std::shared_ptr<Subset> getDiff();
 
   bool isEmpty() const {
@@ -32,6 +32,8 @@ class Subset {
     return std::floor(std::log2(liveSet_.size()));
   }
 
+  /* Get all the planes that conflict with less than "threshold"
+   * number of cells in the cutting. */
   PlaneSet getAllLightIntersectingPlanes(int i,
                                          const Cutting& cutting,
                                          int threshold);

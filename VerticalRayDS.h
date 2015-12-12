@@ -33,7 +33,9 @@ class VerticalRayDS {
   /* preprocess original data structure. */
   void preprocess(std::shared_ptr<Subset> subset);
 
+  /* clean up the planes. */
   void cleanup();
+
  public:
   std::vector<std::shared_ptr<Subset>> subsets_;
 
