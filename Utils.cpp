@@ -17,15 +17,16 @@ bool Utils::isPointAbovePlane(const Point& point, const Plane& plane) {
   return point.z_ > projection_z;
 }
 
-shared_ptr<Plane> Utils::getLowestPlaneInSet(PlaneSet ps, double x, double y)	{
-  double minZ = INT_MIN;
+shared_ptr<Plane> Utils::getLowestPlaneInSet(PlaneSet ps, double x, double y) {
+  double minZ = INT_MAX;
   shared_ptr<Plane> lowestPlane;
-  for(auto&& it:ps)	{
+  for(auto&& it : ps) {
     double currZ = it->calculateZ(x, y);
     if (currZ < minZ)  {
       lowestPlane = it;
       minZ = currZ;
     }
   }
+
   return lowestPlane;
 }

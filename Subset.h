@@ -21,7 +21,9 @@ class Subset {
   void construct();
   PlaneSet deletePlane(std::shared_ptr<Plane>);
 
+  // Return S - S_live
   std::shared_ptr<Subset> getDiff();
+
   bool isEmpty() const {
     return planeSet_.empty();
   }

@@ -25,9 +25,12 @@ void VerticalRayDS::deletePlane(shared_ptr<Plane> h) {
       A.insert(deletedPlanes.begin(), deletedPlanes.end());
     }
   }
-  if(A.count(h) >= 1)
+
+  if(A.count(h) >= 1) {
     A.erase(h);
-  for(auto&& it:A)  {
+  }
+
+  for(auto&& it : A)  {
     insertPlane(it);
   }
 }

@@ -2,7 +2,7 @@
 #include <utility>
 #include <set>
 
-#include "plane.h"
+#include "Plane.h"
 
 using namespace std;
 

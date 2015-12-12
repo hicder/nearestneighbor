@@ -93,8 +93,8 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
 
   Delaunay T(outPoint.begin(), outPoint.end());
   for (auto it = T.finite_faces_begin();
-      it != T.finite_faces_end();
-      it++) {
+       it != T.finite_faces_end();
+       it++) {
     shared_ptr<Cell> cell = make_shared<Cell>();
     // Prepare cell's vertices
     vector<shared_ptr<Point>> points;

@@ -32,7 +32,7 @@ clean:
 .PHONY: nn test clean all
 
 test: Plane.o Utils.o
-	$(LINKER) $(TESTCFLAGS) Plane.o PlaneTest.cpp -o planetest $(TESTLDFLAGS)
-	$(LINKER) $(TESTCFLAGS) Utils.o UtilsTest.cpp -o UtilsTest $(TESTLDFLAGS)
+	$(LINKER) $(TESTCFLAGS) Utils.o Plane.o PlaneTest.cpp -o planetest $(TESTLDFLAGS)
+	$(LINKER) $(TESTCFLAGS) Utils.o Plane.o UtilsTest.cpp -o UtilsTest $(TESTLDFLAGS)
 	./planetest
 	./UtilsTest

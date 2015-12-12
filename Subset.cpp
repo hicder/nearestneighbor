@@ -32,7 +32,10 @@ void Subset::construct() {
   setList_[0] = planeSet_;
   for (int i = 1; i < setListSize; i++) {
     cuttingList_[i] = make_shared<Cutting>(i, C * pow(2, i), setList_[i-1]);
-    setList_[i] = getAllLightIntersectingPlanes(i, *cuttingList_[i], 4 * C * setListSize - 1);
+    setList_[i] = getAllLightIntersectingPlanes(
+        i,                        // C_i
+        *cuttingList_[i],         // T_i
+        4 * C * setListSize - 1); // 4 * c' * ceil(log n)
 
     for (auto cell : cuttingList_[i]->cells_) {
       cell->computeConflict(setList_[i]);
@@ -72,8 +75,12 @@ PlaneSet Subset::deletePlane(shared_ptr<Plane> plane) {
 }
 
 shared_ptr<Subset> Subset::getDiff() {
-  // TODO (hicder): FIX this.
-  return make_shared<Subset>();
+  PlaneSet diff;
+  set_difference(planeSet_.begin(), planeSet_.end(),
+                 liveSet_.begin(), liveSet_.end(),
+                 inserter(diff, diff.begin()),
+                 PlaneComparator());
+  return make_shared<Subset>(diff);
 }
 
 PlaneSet Subset::getAllLightIntersectingPlanes(int i,
