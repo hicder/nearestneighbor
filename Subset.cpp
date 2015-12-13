@@ -23,10 +23,9 @@ void Subset::insertPlane(shared_ptr<Plane> plane) {
 
 void Subset::construct() {
   // Resize
-  int setListSize = ceil(log2(planeSet_.size())) + 1;
+  int setListSize = ceil(log2(planeSet_.size())) - 2;
   setList_.resize(setListSize);
   cuttingList_.resize(setListSize);
-
   // Build S_i
   // This must come after all planes are inserted into planeSet_
   setList_[0] = planeSet_;
@@ -34,7 +33,7 @@ void Subset::construct() {
     cuttingList_[i] = make_shared<Cutting>(i, C * pow(2, i), setList_[i-1]);
     setList_[i] = getAllLightIntersectingPlanes(
         i,                        // C_i
-        *cuttingList_[i],         // T_i
+        *(cuttingList_[i]),         // T_i
         4 * C * setListSize - 1); // 4 * c' * ceil(log n)
 
     for (auto cell : cuttingList_[i]->cells_) {

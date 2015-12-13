@@ -50,6 +50,32 @@ TEST_F(UtilsTest, checkLowestPlane) {
   shared_ptr<Plane> lowest = Utils::getLowestPlaneInSet(planes, 100, 200);
   EXPECT_EQ(5, lowest->c_);
 }
+
+TEST_F(UtilsTest, checkRayBetweenPlanes) {
+  PlaneSet planes;
+  shared_ptr<Plane> expected = make_shared<Plane>(1, 2, 3);
+  planes.insert(expected);
+  planes.insert(make_shared<Plane>(1, 2, 5));
+  VerticalRay ray(1,2,1);
+  EXPECT_EQ(expected, Utils::getLowestPlaneAboveRay(planes, ray));
+}
+
+TEST_F(UtilsTest, checkRayBelowBoth) {
+  PlaneSet planes;
+  shared_ptr<Plane> expected = make_shared<Plane>(1, 2, 3);
+  planes.insert(expected);
+  planes.insert(make_shared<Plane>(1, 2, 5));
+  VerticalRay ray(1,2,0);
+  EXPECT_EQ(expected, Utils::getLowestPlaneAboveRay(planes, ray));
+}
+
+TEST_F(UtilsTest, checkRayAboveBoth) {
+  PlaneSet planes;
+  planes.insert(make_shared<Plane>(1, 2, 3));
+  planes.insert(make_shared<Plane>(1, 2, 5));
+  VerticalRay ray(1,2,5);
+  EXPECT_EQ(nullptr, Utils::getLowestPlaneAboveRay(planes, ray));
+}
 }  // namespace
 
 int main(int argc, char **argv) {

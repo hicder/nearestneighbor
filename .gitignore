@@ -2,6 +2,7 @@
 *.dSYM
 *.o
 CuttingTest
+IntegrationTest
 PlaneTest
 UtilsTest
 a.out

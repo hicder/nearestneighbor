@@ -59,17 +59,19 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
   for (auto it = v.begin(); it != v.end() + size && it != v.end(); it++) {
     pointSet.push_back(Point_3((*it)->a_, (*it)->b_, (*it)->c_));
   }
-
   // Build polyhedron.
   CGAL::convex_hull_3(pointSet.begin(), pointSet.begin() + size, poly);
-
   // Transform facet into planes.
   transform(poly.facets_begin(),
             poly.facets_end(),
             poly.planes_begin(),
             Plane_from_facet());
 
+  // Transform facet into planes.
   vector<Plane_3> planesToCheck;
+  int count = 0;
+  for (auto it = poly.planes_begin(); it != poly.planes_end(); it++, count++);
+  planesToCheck.resize(count);
   copy(poly.planes_begin(), poly.planes_end(), planesToCheck.begin());
 
   // Remove all facing downward planes.
@@ -83,7 +85,6 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
 
   vector<Point_2> outPoint;
   multimap<pair<double, double>, double> p3ToZ;
-
   for (auto&& plane : planesToCheck) {
     double outZ;
     Point_2 p = Plane_3ToPoint(plane, outZ);
@@ -98,7 +99,7 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
     shared_ptr<Cell> cell = make_shared<Cell>();
     // Prepare cell's vertices
     vector<shared_ptr<Point>> points;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
       double x = it->vertex(i)->point().x();
       double y = it->vertex(i)->point().y();
       shared_ptr<Point> p =
@@ -109,6 +110,7 @@ Cutting::Cutting(int i, int level, const PlaneSet& planes) {
     cell->computeConflict(planes);
     cells_.push_back(cell);
   }
+
 }
 
 Cutting::Cutting() {

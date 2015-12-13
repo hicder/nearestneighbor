@@ -54,7 +54,6 @@ void VerticalRayDS::preprocess(shared_ptr<Subset> subset) {
     subsets_.push_back(subset);
     subset->construct();
     depthMap_[subset->depth()].insert(subset);
-
     preprocess(subset->getDiff());
   }
 }

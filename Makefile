@@ -5,7 +5,7 @@ TESTLDFLAGS = -L/usr/local/lib
 TESTCFLAGS = -I/usr/local/include -std=c++11
 
 TESTDIR= ./test
-TESTSRC= $(addprefix $(TESTDIR)/,PlaneTest.cpp UtilsTest.cpp CuttingTest.cpp)
+TESTSRC= $(addprefix $(TESTDIR)/,PlaneTest.cpp UtilsTest.cpp CuttingTest.cpp IntegrationTest.cpp)
 TESTOBJ=$(join $(addsuffix obj/, $(dir $(TESTSRC))), $(notdir $(TESTSRC:.cpp=.o)))
 TESTTARGET=$(addprefix test/, $(notdir $(TESTSRC:.cpp=)))
 TESTDEPENDS=$(join $(addsuffix .dep/, $(dir $(TESTSRC))), $(notdir $(TESTSRC:.cpp=.d)))
