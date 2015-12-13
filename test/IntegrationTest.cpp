@@ -51,8 +51,9 @@ TEST_F(IntegrationTest, checkEverything) {
     rayDS.insertPlane(plane);
   }
 
-  shared_ptr<Plane> nearest = rayDS.getNearestPlane(20, 30);
-  EXPECT_EQ(nullptr, nearest);
+  shared_ptr<Plane> nearest = rayDS.getNearestPlane(0,0);
+  shared_ptr<Plane> expected = make_shared<Plane>(0,0,1000);
+  EXPECT_EQ(*expected, *nearest);
 }
 
 }  // namespace
