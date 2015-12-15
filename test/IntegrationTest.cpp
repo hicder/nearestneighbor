@@ -56,6 +56,22 @@ TEST_F(IntegrationTest, checkEverything) {
   EXPECT_EQ(*expected, *nearest);
 }
 
+TEST_F(IntegrationTest, testRemovePlane) {
+  ifstream in("test/planes.txt");
+  double a, b, c;
+  VerticalRayDS rayDS;
+  while(in >> a >> b >> c) {
+    shared_ptr<Plane> plane = make_shared<Plane>(a, b, c);
+    rayDS.insertPlane(plane);
+  }
+
+  shared_ptr<Plane> delPlane = make_shared<Plane>(0, 0, 1000);
+  rayDS.deletePlane(delPlane);
+
+  shared_ptr<Plane> nearest = rayDS.getNearestPlane(0, 0);
+  EXPECT_EQ(100, nearest->c_);
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {

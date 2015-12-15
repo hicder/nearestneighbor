@@ -21,7 +21,7 @@ TARGET=nn
 LIBS=-lgtest -lpthread -lcgal -lgmp -lmpfr
 
 ## Default rule executed
-all: $(TARGET)
+all: $(TARGET) test
 	@true
 
 ## Clean Rule
